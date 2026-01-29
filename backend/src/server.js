@@ -13,16 +13,24 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5000;
 
+app.use(cors({
+  origin: process.env.CLIENT_URL, // frontend URL
+  credentials: true,
+}));
 app.use(express.json());
 app.use(cookieParser());
 
-app.use(cors({
-  origin: "http://localhost:5173", // frontend URL
-  credentials: true,
-}));
-
 
 app.use("/api/auth", authRoutes)
+app.get("/", (req, res) => {
+  res.send("API is running 🚀");
+});
+
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json({ message: "Something went wrong" });
+});
+
 
 
 connectDB()

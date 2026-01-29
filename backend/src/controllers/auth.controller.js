@@ -54,6 +54,7 @@ export const login = async(req,res) => {
 
      const { email, password} = req.body;
  try {
+    
      const user = await User.findOne({email})
      if(!user) {
         return res.status(400).json({message: "Invalid credentials"})
@@ -76,24 +77,6 @@ export const login = async(req,res) => {
     res.status(500).json({message: "Internal Server Error"})   
     }
 }
-
-
-
-// logout route
-// export const logout = async (req, res) => {
-//   try {
-//     res.clearCookie("jwt", {
-//       httpOnly: true,
-//       sameSite: "strict",
-//       secure: process.env.NODE_ENV !== "development",
-//     });
-
-//     res.status(200).json({ message: "Logged out successfully" });
-//   } catch (error) {
-//     console.log("Error in logout controller:", error.message);
-//     res.status(500).json({ message: "Internal Server Error" });
-//   }
-// };
 
 export const logout = async (req,res) => {
 
