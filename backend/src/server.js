@@ -4,6 +4,7 @@ import dotenv from "dotenv"
 import cookieParser from "cookie-parser"
 import authRoutes from "./routes/auth.route.js"
 import adminRoutes from "./routes/admin.route.js";
+import userRoutes from "./routes/user.route.js"
 import { connectDB } from './config/db.js';
 
 
@@ -23,6 +24,7 @@ app.use(cookieParser());
 
 app.use("/api/auth", authRoutes)
 app.use("/api/admin", adminRoutes);
+app.use("/api/user", userRoutes )
 
 app.get("/", (req, res) => {
   res.send("API is running 🚀");
