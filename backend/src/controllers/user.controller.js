@@ -4,6 +4,12 @@ import Subject from "../models/subject.model.js";
 import LabManual from "../models/lab.model.js";
 import Question from "../models/question.model.js";
 import Project from "../models/project.model.js";
+import Contact from "../models/contact.model.js";
+import Exam from "../models/exam.model.js";
+import Announcement from "../models/announcement.model.js";
+import Assignment from "../models/assignment.model.js";
+import SubjectOutline from "../models/subjectOutline.model.js";
+import Resource from "../models/resource.model.js";
 
 
 
@@ -107,3 +113,97 @@ export const getProjects = async (req, res) => {
     res.status(500).json({ message: "Internal Server Error" });
   }
 };
+
+// Submit a contact query
+export const submitContact = async (req, res) => {
+  try {
+    const { name, email, subject, message } = req.body;
+
+    if (!name || !email || !subject || !message) {
+      return res.status(400).json({ message: "All fields are required" });
+    }
+
+    const contact = await Contact.create({ name, email, subject, message });
+    res.status(201).json({ message: "Message submitted successfully", contact });
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+};
+
+// Get all exams for students
+export const getExams = async (req, res) => {
+  try {
+    const exams = await Exam.find().sort({ date: 1, time: 1 });
+    res.json(exams);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+};
+
+// List all announcements for users
+export const getAnnouncements = async (req, res) => {
+  try {
+    const announcements = await Announcement.find().sort({ date: -1 }); // latest first
+    res.json(announcements);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+};
+
+// List all assignments (students)
+export const getAssignments = async (req, res) => {
+  try {
+    const assignments = await Assignment.find().sort({ givenOn: -1 });
+    res.json(assignments);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+};
+
+
+// Get all subject outlines
+export const getSubjectOutlines = async (req, res) => {
+  try {
+    const outlines = await SubjectOutline.find().sort({ subjectName: 1 });
+    res.json(outlines);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+};
+
+export const getNextExam = async (req, res) => {
+  try {
+    const now = new Date();
+
+    const nextExam = await Exam.find({ date: { $gte: now } })
+      .sort({ date: 1, time: 1 }) // earliest date first
+      .limit(1);
+
+    if (!nextExam || nextExam.length === 0) {
+      return res.status(404).json({ message: "No upcoming exams" });
+    }
+
+    res.json(nextExam[0]);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+};
+
+
+// Get all resources
+export const getResources = async (req, res) => {
+  try {
+    const resources = await Resource.find().sort({ createdAt: -1 });
+    res.json(resources);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+};
+
