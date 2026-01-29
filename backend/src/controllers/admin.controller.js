@@ -2,6 +2,9 @@ import Book from "../models/book.model.js";
 import Semester from "../models/semester.model.js";
 import Subject from "../models/subject.model.js";
 import LabManual from "../models/lab.model.js";
+import Question from "../models/question.model.js";
+import Project from "../models/project.model.js";
+
 
 
 
@@ -123,5 +126,60 @@ export const deleteLab = async (req, res) => {
     res.json({ message: "Lab deleted" });
   } catch (err) {
     res.status(500).json({ message: err.message });
+  }
+};
+
+//QA
+export const deleteQuestion = async (req, res) => {
+  try {
+    const question = await Question.findById(req.params.id);
+    if (!question) return res.status(404).json({ message: "Question not found" });
+
+    // Only author or admin can delete
+    if (req.user.role !== "admin" && question.author.toString() !== req.user._id.toString()) {
+      return res.status(403).json({ message: "Not authorized" });
+    }
+
+    await question.remove();
+    res.json({ message: "Question deleted successfully" });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+
+// project
+export const addProject = async (req, res) => {
+  try {
+    const { name, image, description, link, ownerName } = req.body;
+    const project = await Project.create({ name, image, description, link, ownerName });
+    res.status(201).json(project);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+};
+
+// Update a project
+export const updateProject = async (req, res) => {
+  try {
+    const updated = await Project.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    if (!updated) return res.status(404).json({ message: "Project not found" });
+    res.json(updated);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+};
+
+// Delete a project
+export const deleteProject = async (req, res) => {
+  try {
+    const deleted = await Project.findByIdAndDelete(req.params.id);
+    if (!deleted) return res.status(404).json({ message: "Project not found" });
+    res.json({ message: "Project deleted successfully" });
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).json({ message: "Internal Server Error" });
   }
 };
