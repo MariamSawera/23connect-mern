@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import api from "./lib/axios.js";
 import Navbar from "./components/Navbar.jsx";
 import Footer from "./components/Footer.jsx";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 
 //import pages
 import HomePage from "./pages/HomePage.jsx";
@@ -15,7 +15,7 @@ import ResourcesPage from "./pages/ResourcesPage.jsx";
 import ExamsPage from "./pages/ExamsPage.jsx";
 import GalleryPage from "./pages/GalleryPage.jsx";
 import ContactPage from "./pages/ContactPage.jsx";
-import LoginPage from "./pages/LoginPage.jsx";
+// import LoginPage from "./pages/LoginPage.jsx";
 import AdminPage from "./pages/AdminPage.jsx";
 
 
@@ -26,10 +26,13 @@ function App() {
       .catch(err => console.error(err));
   }, []);
 
+    const location = useLocation();
+    const hideNavAndFooter = location.pathname === "/login" || location.pathname === "/signup";
+
   return (
     <>
-      {/* Navbar at the top */}
-      <Navbar />
+      {!hideNavAndFooter && <Navbar />}
+
       <Routes>
       <Route path="/" element={<HomePage/>}/>
       <Route path="/announcemnts" element={<AnnouncementsPage/>}/>
@@ -41,8 +44,6 @@ function App() {
       <Route path="/exams" element={<ExamsPage/>}/>
       <Route path="/projects" element={<GalleryPage/>}/>
       <Route path="/contact" element={<ContactPage/>}/>
-      <Route path="/login" element={<LoginPage/>}/>
-      <Route path="/signup" element={<LoginPage/>}/>
       <Route path="/admin" element={<AdminPage/>}/>
       </Routes>
       <Footer/>
