@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import api from "./lib/axios.js";
-
+import Navbar from "./components/Navbar.jsx";
 
 function App() {
   useEffect(() => {
@@ -9,10 +9,17 @@ function App() {
       .catch(err => console.error(err));
   }, []);
 
-  return <h1 className="text-blue-500">Frontend running ⚛️</h1>;
-  <button className="btn btn-primary">hello</button>
-  
+  return (
+    <>
+      {/* Navbar at the top */}
+      <Navbar />
 
+      {/* Page content */}
+      {/* <h1 className="text-blue-500 text-xl p-6">
+        Frontend running ⚛️
+      </h1> */}
+    </>
+  );
 }
 
 export default App;

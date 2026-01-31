@@ -1,49 +1,83 @@
 const Navbar = () => {
   return (
-    /* Main navbar container */
-    <nav className="w-full h-16 bg-indigo-600 flex items-center justify-between px-6 text-white">
+    <div className="navbar bg-base-100 shadow-sm px-6">
 
-      {/* ================= LEFT SECTION (LOGO) ================= */}
-      <div className="flex items-center gap-2">
+      {/* ================= LEFT (LOGO) ================= */}
+      <div className="navbar-start flex items-center gap-2 ">
         {/* Logo badge */}
-        <div className="w-7 h-7 bg-white text-indigo-600 font-bold rounded-md flex items-center justify-center">
+        <div className="w-8 h-8 rounded-lg bg-indigo-600 text-white font-bold flex items-center justify-center">
           23
         </div>
 
-        {/* App name */}
-        <span className="text-lg font-semibold">Connect</span>
+        {/* Brand name */}
+        <span className="font-semibold text-lg text-gray-800">
+          Connect.
+        </span>
       </div>
 
-      {/* == CENTER SECTION (NAV LINKS) == */}
-      <ul className="hidden md:flex items-center gap-5 text-sm">
-        {/* Active link */}
-        <li className="bg-white/20 px-3 py-1 rounded-md cursor-pointer">
-          Home
-        </li>
+      {/* ================= CENTER (NAV LINKS) ================= */}
+      <div className="navbar-center hidden lg:flex">
+        <ul className="menu menu-horizontal px-1 gap-1 text-gray-600">
 
-        {/* Other links */}
-        <li className="cursor-pointer hover:text-gray-200">Semesters</li>
-        <li className="cursor-pointer hover:text-gray-200">Books</li>
-        <li className="cursor-pointer hover:text-gray-200">Resources</li>
-        <li className="cursor-pointer hover:text-gray-200">Exams</li>
-        <li className="cursor-pointer hover:text-gray-200">Help Q&amp;A</li>
-        <li className="cursor-pointer hover:text-gray-200">Gallery</li>
-        <li className="cursor-pointer hover:text-gray-200">Admin Panel</li>
-      </ul>
+          {/* Active link */}
+          <li>
+            <a className="bg-indigo-100 text-indigo-600 font-medium rounded-lg">
+              🏠 Home
+            </a>
+          </li>
 
-      {/* ================= RIGHT SECTION (USER INFO) ================= */}
-      <div className="flex items-center gap-4">
-        {/* Greeting text */}
-        <span className="text-sm hidden sm:block">
-          Hi, Admin User
-        </span>
+          <li>
+            <a className="rounded-lg hover:bg-indigo-50">
+              🎓 Semesters
+            </a>
+          </li>
 
-        {/* Logout button */}
-        <button className="bg-indigo-800 hover:bg-indigo-900 px-4 py-1.5 rounded-md text-sm transition">
-          Logout
+          <li>
+            <a className="rounded-lg hover:bg-indigo-50">
+              📚 Library
+            </a>
+          </li>
+
+          <li>
+            <a className="rounded-lg hover:bg-indigo-50">
+              📁 Files
+            </a>
+          </li>
+
+          <li>
+            <a className="rounded-lg hover:bg-indigo-50">
+              📝 Exams
+            </a>
+          </li>
+
+          <li>
+            <a className="rounded-lg hover:bg-indigo-50">
+              💬 Community
+            </a>
+          </li>
+
+          <li>
+            <a className="rounded-lg hover:bg-indigo-50">
+              🖼️ Gallery
+            </a>
+          </li>
+                    <li>
+            <a className="rounded-lg hover:bg-indigo-50">
+              🖼️ contact
+            </a>
+          </li>
+
+        </ul>
+      </div>
+
+      {/* ================= RIGHT (LOGIN) ================= */}
+      <div className="navbar-end">
+        <button className="btn btn-primary bg-indigo-600 hover:bg-indigo-700 border-none rounded-xl px-6">
+          Login
         </button>
       </div>
-    </nav>
+
+    </div>
   );
 };
 
